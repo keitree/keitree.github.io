@@ -96,8 +96,8 @@
             const hash = window.location.hash;
             let selectedNames = [];
 
-            if (hash.includes('selected=')) {
-                const rawSelected = hash.split('selected=')[1];
+            if (hash.includes('items=')) {
+                const rawSelected = hash.split('items=')[1];
                 if (rawSelected) {
                     selectedNames = decodeURIComponent(rawSelected)
                         .split(',')

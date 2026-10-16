@@ -265,3 +265,14 @@ iframe {
         padding: 2rem 1rem;
     }
 }
+
+.view-all-link {
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.15s ease, transform 0.15s ease;
+    float: right;
+}

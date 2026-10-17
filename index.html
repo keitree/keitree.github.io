@@ -44,7 +44,6 @@
         <a href="/photography/" target="_blank">
             <div class="masonry" id="photo-grid"></div>
         </a>
-        <a href="/photography/" class="view-all-link">View All Photos</a>
     </section>
 
     <div class="grid-divider"></div>
@@ -283,12 +282,32 @@
             let displayed = pool.slice(0, DISPLAY_COUNT);
             let remaining = pool.slice(DISPLAY_COUNT);
 
-            displayed.forEach(src => {
-                const img = document.createElement("img");
-                img.src = src;
-                img.alt = "Photography";
-                img.loading = "lazy";
-                container.appendChild(img);
+            displayed.forEach((src, index) => {
+                if (index === 3) {
+
+                    const wrapper = document.createElement("div");
+                    wrapper.classList.add("view-more-tile");
+
+                    const img = document.createElement("img");
+                    img.src = src;
+                    img.alt = "Photography";
+                    img.loading = "lazy";
+
+                    const overlay = document.createElement("div");
+                    overlay.classList.add("tile-overlay");
+                    overlay.innerHTML = `<span>+ View All</span>`;
+
+                    wrapper.appendChild(img);
+                    wrapper.appendChild(overlay);
+                    container.appendChild(wrapper);
+                } else {
+
+                    const img = document.createElement("img");
+                    img.src = src;
+                    img.alt = "Photography";
+                    img.loading = "lazy";
+                    container.appendChild(img);
+                }
             });
 
             setInterval(() => {
@@ -307,22 +326,16 @@
                 const preloader = new Image();
                 preloader.src = newSrc;
 
-                preloader.onload = () => {
+                const updateImage = () => {
                     imgToReplace.classList.add("fade-out");
-
                     setTimeout(() => {
                         imgToReplace.src = newSrc;
                         imgToReplace.classList.remove("fade-out");
                     }, FADE_DURATION);
                 };
 
-                if (preloader.complete) {
-                    imgToReplace.classList.add("fade-out");
-                    setTimeout(() => {
-                        imgToReplace.src = newSrc;
-                        imgToReplace.classList.remove("fade-out");
-                    }, FADE_DURATION);
-                }
+                preloader.onload = updateImage;
+                if (preloader.complete) updateImage();
 
             }, SWAP_INTERVAL);
         }

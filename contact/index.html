@@ -103,6 +103,11 @@
                         .split(',')
                         .map(name => name.trim())
                         .filter(name => name.length > 0);
+                    document.getElementById('contact').scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start', // 'start', 'center', 'end', 'nearest'
+                    inline: 'nearest' // 'start', 'center', 'end', 'nearest'
+                    });
                 }
             }
 
@@ -151,7 +156,7 @@
 
                 if (tallyIframe) {
                     const imageListString = matchedFilenames.join(', ');
-                    const messageText = "Hi, I would like to inquire about purchasing the following images: " + imageListString;
+                    const messageText = "Hi, I would like to inquire about the following images: " + imageListString;
                     const encodedMessage = encodeURIComponent(messageText);
 
                     const baseUrl = "https://tally.so/embed/0QjE5y?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1";

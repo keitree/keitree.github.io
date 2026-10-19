@@ -1,4 +1,4 @@
-const batchSize=50;let currentBatch=0;let isLoading=false;let allLoaded=false;const selectedImages=new Set();let currentLightboxIndex=-1;let touchStartX=0;let touchEndX=0;function updateBuyButtonState(){const contactBtn=document.getElementById('contact-action-link');const contactText=document.getElementById('contact-action-text');if(!contactBtn)return;const selectedArray=Array.from(selectedImages);const count=selectedArray.length;if(count>0){const imageListParam=selectedArray.map(encodeURIComponent).join(',');contactBtn.href='/contact/#items='+imageListParam;if(contactText){contactText.textContent='Buy Selected ('+count+')';}
+const batchSize=50;let currentBatch=0;let isLoading=false;let allLoaded=false;const selectedImages=new Set();let currentLightboxIndex=-1;let touchStartX=0;let touchEndX=0;function updateBuyButtonState(){const contactBtn=document.getElementById('contact-action-link');const contactText=document.getElementById('contact-action-text');if(!contactBtn)return;const selectedArray=Array.from(selectedImages);const count=selectedArray.length;if(count>0){const imageListParam=selectedArray.map(encodeURIComponent).join(',');contactBtn.href='/contact/#items='+imageListParam;if(contactText){contactText.textContent='Inquire About Selected ('+count+')';}
 contactBtn.classList.add('is-active');}else{contactBtn.classList.remove('is-active');}}
 function handleGlobalHover(parentEl){const exifContainer=parentEl.querySelector('.exif-info');if(!exifContainer)return;const content=exifContainer.querySelector('.exif-content');if(!content)return;const isActuallyOverflowing=content.scrollWidth>(exifContainer.offsetWidth+2);if(isActuallyOverflowing){exifContainer.classList.add('is-overflowing');}else{exifContainer.classList.remove('is-overflowing');}}
 function resetOverflow(parentEl){const exifContainer=parentEl.querySelector('.exif-info');if(exifContainer){exifContainer.classList.remove('is-overflowing');}}
@@ -25,7 +25,7 @@ if(item.tags){const rawArray=Array.isArray(item.tags)?item.tags:item.tags.split(
 if(!item.isVideo){const buyUrl=`/contact/#items=${encodeURIComponent(item.fname || item.url)}`;captionHTML+=`
             <div class="lightbox-actions">
                 <a href="${buyUrl}" target="_blank" class="lightbox-buy-button">
-                    <i class="fa-solid fa-cart-shopping"></i> Buy Original
+                    Inquire
                 </a>
             </div>
         `;}
@@ -68,8 +68,8 @@ if(!item.isVideo){mediaData+=`<div class="image-meta" title="${item.fname}">
                                 <div class="exif-content duplicate-content">${tags}</div>
                             </div>
                         </div>`;}
-mediaData+=`</div>`;mediaData+=`<a href="/contact/#items=${item.fname}" target="_blank" class="buy-button" title="Buy original image">
-                                    <i class="fa-solid fa-cart-shopping"></i> Buy
+mediaData+=`</div>`;mediaData+=`<a href="/contact/#items=${item.fname}" target="_blank" class="buy-button" title="Send Inquiry">
+                                    Inquire
                             </a>`;}}
 mediaData+=`</div>`;div.innerHTML=mediaData;const trigger=div.querySelector('.lightbox-trigger');if(trigger){trigger.addEventListener('click',(e)=>{e.preventDefault();const idx=parseInt(trigger.getAttribute('data-index'),10);openLightbox(idx);});}
 const checkbox=div.querySelector('.image-select-checkbox');if(checkbox){checkbox.addEventListener('change',(e)=>{const targetId=e.target.getAttribute('data-id');if(e.target.checked){selectedImages.add(targetId);div.classList.add('selected');}else{selectedImages.delete(targetId);div.classList.remove('selected');}

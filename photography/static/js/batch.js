@@ -22,7 +22,7 @@ if(item.fname){captionHTML+=`<span class="lightbox-filename"><i class="fa-regula
 if(item.desc){captionHTML+=`<p class="lightbox-desc">${item.desc}</p>`;}
 if(item.shutter||item.aperture||item.iso){let exif=[];if(item.shutter)exif.push(`<span><i class="fa-solid fa-stopwatch"></i> ${item.shutter}</span>`);if(item.aperture)exif.push(`<span><i class="fa-solid fa-circle-dot"></i> ${item.aperture}</span>`);if(item.iso)exif.push(`<span>${item.iso}</span>`);captionHTML+=`<div class="lightbox-exif">${exif.join(' • ')}</div>`;}
 if(item.tags){const rawArray=Array.isArray(item.tags)?item.tags:item.tags.split(',');const limitedTags=rawArray.map(t=>t.trim()).filter(Boolean).slice(0,5);if(limitedTags.length>0){const tagsHTML=limitedTags.map(t=>`<span class="lightbox-tag">#${t}</span>`).join(' ');captionHTML+=`<div class="lightbox-tags">${tagsHTML}</div>`;}}
-if(!item.isVideo){const buyUrl=`/contact/#selected=${encodeURIComponent(item.fname || item.url)}`;captionHTML+=`
+if(!item.isVideo){const buyUrl=`/contact/#items=${encodeURIComponent(item.fname || item.url)}`;captionHTML+=`
             <div class="lightbox-actions">
                 <a href="${buyUrl}" target="_blank" class="lightbox-buy-button">
                     <i class="fa-solid fa-cart-shopping"></i> Buy Original
@@ -68,7 +68,7 @@ if(!item.isVideo){mediaData+=`<div class="image-meta" title="${item.fname}">
                                 <div class="exif-content duplicate-content">${tags}</div>
                             </div>
                         </div>`;}
-mediaData+=`</div>`;mediaData+=`<a href="/contact/#selected=${item.fname}" target="_blank" class="buy-button" title="Buy original image">
+mediaData+=`</div>`;mediaData+=`<a href="/contact/#items=${item.fname}" target="_blank" class="buy-button" title="Buy original image">
                                     <i class="fa-solid fa-cart-shopping"></i> Buy
                             </a>`;}}
 mediaData+=`</div>`;div.innerHTML=mediaData;const trigger=div.querySelector('.lightbox-trigger');if(trigger){trigger.addEventListener('click',(e)=>{e.preventDefault();const idx=parseInt(trigger.getAttribute('data-index'),10);openLightbox(idx);});}

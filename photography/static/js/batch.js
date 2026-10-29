@@ -1,4 +1,4 @@
-const batchSize=50;let currentBatch=0;let isLoading=false;let allLoaded=false;const selectedImages=new Set();let currentLightboxIndex=-1;let touchStartX=0;let touchEndX=0;function updateBuyButtonState(){const contactBtn=document.getElementById('contact-action-link');const contactText=document.getElementById('contact-action-text');if(!contactBtn)return;const selectedArray=Array.from(selectedImages);const count=selectedArray.length;if(count>0){const imageListParam=selectedArray.map(encodeURIComponent).join(',');contactBtn.href='/contact/#items='+imageListParam;if(contactText){contactText.textContent='Inquire About Selected ('+count+')';}
+const batchSize=50;let currentBatch=0;let isLoading=false;let allLoaded=false;const selectedImages=new Set();let currentLightboxIndex=-1;let touchStartX=0;let touchEndX=0;function updateInquireButtonState(){const contactBtn=document.getElementById('contact-action-link');const contactText=document.getElementById('contact-action-text');if(!contactBtn)return;const selectedArray=Array.from(selectedImages);const count=selectedArray.length;if(count>0){const imageListParam=selectedArray.map(encodeURIComponent).join(',');contactBtn.href='/contact/#items='+imageListParam;if(contactText){contactText.textContent='Inquire About Selected ('+count+')';}
 contactBtn.classList.add('is-active');}else{contactBtn.classList.remove('is-active');}}
 function handleGlobalHover(parentEl){const exifContainer=parentEl.querySelector('.exif-info');if(!exifContainer)return;const content=exifContainer.querySelector('.exif-content');if(!content)return;const isActuallyOverflowing=content.scrollWidth>(exifContainer.offsetWidth+2);if(isActuallyOverflowing){exifContainer.classList.add('is-overflowing');}else{exifContainer.classList.remove('is-overflowing');}}
 function resetOverflow(parentEl){const exifContainer=parentEl.querySelector('.exif-info');if(exifContainer){exifContainer.classList.remove('is-overflowing');}}
@@ -22,9 +22,9 @@ if(item.fname){captionHTML+=`<span class="lightbox-filename"><i class="fa-regula
 if(item.desc){captionHTML+=`<p class="lightbox-desc">${item.desc}</p>`;}
 if(item.shutter||item.aperture||item.iso){let exif=[];if(item.shutter)exif.push(`<span><i class="fa-solid fa-stopwatch"></i> ${item.shutter}</span>`);if(item.aperture)exif.push(`<span><i class="fa-solid fa-circle-dot"></i> ${item.aperture}</span>`);if(item.iso)exif.push(`<span>${item.iso}</span>`);captionHTML+=`<div class="lightbox-exif">${exif.join(' • ')}</div>`;}
 if(item.tags){const rawArray=Array.isArray(item.tags)?item.tags:item.tags.split(',');const limitedTags=rawArray.map(t=>t.trim()).filter(Boolean).slice(0,5);if(limitedTags.length>0){const tagsHTML=limitedTags.map(t=>`<span class="lightbox-tag">#${t}</span>`).join(' ');captionHTML+=`<div class="lightbox-tags">${tagsHTML}</div>`;}}
-if(!item.isVideo){const buyUrl=`/contact/#items=${encodeURIComponent(item.fname || item.url)}`;captionHTML+=`
+if(!item.isVideo){const inquireUrl=`/contact/#items=${encodeURIComponent(item.fname || item.url)}`;captionHTML+=`
             <div class="lightbox-actions">
-                <a href="${buyUrl}" target="_blank" class="lightbox-buy-button">
+                <a href="${inquireUrl}" target="_blank" class="lightbox-inquiry-button">
                     Inquire
                 </a>
             </div>
@@ -68,12 +68,12 @@ if(!item.isVideo){mediaData+=`<div class="image-meta" title="${item.fname}">
                                 <div class="exif-content duplicate-content">${tags}</div>
                             </div>
                         </div>`;}
-mediaData+=`</div>`;mediaData+=`<a href="/contact/#items=${item.fname}" target="_blank" class="buy-button" title="Send Inquiry">
+mediaData+=`</div>`;mediaData+=`<a href="/contact/#items=${item.fname}" target="_blank" class="inquiry-button" title="Send Inquiry">
                                     Inquire
                             </a>`;}}
 mediaData+=`</div>`;div.innerHTML=mediaData;const trigger=div.querySelector('.lightbox-trigger');if(trigger){trigger.addEventListener('click',(e)=>{e.preventDefault();const idx=parseInt(trigger.getAttribute('data-index'),10);openLightbox(idx);});}
 const checkbox=div.querySelector('.image-select-checkbox');if(checkbox){checkbox.addEventListener('change',(e)=>{const targetId=e.target.getAttribute('data-id');if(e.target.checked){selectedImages.add(targetId);div.classList.add('selected');}else{selectedImages.delete(targetId);div.classList.remove('selected');}
-updateBuyButtonState();});}
+updateInquireButtonState();});}
 const img=div.querySelector('.imgbox-full .image-embed');if(img&&img.tagName==='IMG'){if(img.complete){img.classList.add('loaded');}else{img.addEventListener('load',()=>img.classList.add('loaded'));}}
 batch.appendChild(div);});return batch;}
 function loadNextBatch(){if(isLoading||allLoaded)return;const startIndex=currentBatch*batchSize;if(startIndex>=images.length){allLoaded=true;if(observer)observer.disconnect();return;}

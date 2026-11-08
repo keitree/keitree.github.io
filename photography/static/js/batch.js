@@ -68,9 +68,7 @@ if(!item.isVideo){mediaData+=`<div class="image-meta" title="${item.fname}">
                                 <div class="exif-content duplicate-content">${tags}</div>
                             </div>
                         </div>`;}
-mediaData+=`</div>`;mediaData+=`<a href="/contact/#items=${item.fname}" target="_blank" class="inquiry-button" title="Send Inquiry">
-                                    Inquire
-                            </a>`;}}
+mediaData+=`</div>`;}}
 mediaData+=`</div>`;div.innerHTML=mediaData;const trigger=div.querySelector('.lightbox-trigger');if(trigger){trigger.addEventListener('click',(e)=>{e.preventDefault();const idx=parseInt(trigger.getAttribute('data-index'),10);openLightbox(idx);});}
 const checkbox=div.querySelector('.image-select-checkbox');if(checkbox){checkbox.addEventListener('change',(e)=>{const targetId=e.target.getAttribute('data-id');if(e.target.checked){selectedImages.add(targetId);div.classList.add('selected');}else{selectedImages.delete(targetId);div.classList.remove('selected');}
 updateInquireButtonState();});}
